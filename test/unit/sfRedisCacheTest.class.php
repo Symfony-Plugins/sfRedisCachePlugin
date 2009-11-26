@@ -15,14 +15,7 @@ catch (sfInitializationException $e)
   return;
 }
 
-if (file_exists($configuration->getSymfonyLibDir().'/../test/cache/sfCacheDriverTests.class.php'))
-{
-  require_once($configuration->getSymfonyLibDir().'/../test/cache/sfCacheDriverTests.class.php');
-}
-else
-{
-  throw new sfInitializationException("Sorry but can't launch this test as it relies on sfCacheDriverTests.");
-}
+require_once(dirname(__FILE__).'/sfCacheDriverTests.class.php');
 
 // setup
 sfConfig::set('sf_logging_enabled', false);

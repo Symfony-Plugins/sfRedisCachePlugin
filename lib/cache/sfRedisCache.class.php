@@ -28,7 +28,7 @@ class sfRedisCache extends sfCache
   {
     parent::initialize($options);
 
-    if($this->getOption('mode', 'shared') === 'shared')
+    if($this->getOption('mode', 'shared') === 'shared' && !class_exists('Redis'))
     {
       include 'redis.php';
     }
