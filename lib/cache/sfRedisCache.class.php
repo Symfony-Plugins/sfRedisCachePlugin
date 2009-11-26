@@ -18,6 +18,7 @@ class sfRedisCache extends sfCache
    * Available options :
    * * redis : a redis object (not mandatory)
    *
+   * * mode:   Defines if we work with the "compiled" (faster) or "shared" (easier) library (default to "shared")
    * * port:   The default port (default to 6379)
    * * server: The default server (default to 127.0.0.1)
    * 
@@ -27,9 +28,9 @@ class sfRedisCache extends sfCache
   {
     parent::initialize($options);
 
-    if(file_exists('redis.php'))
+    if($this->getOption('mode', 'shared') === 'shared')
     {
-      require 'redis.php';
+      include 'redis.php';
     }
 
     if (!class_exists('Redis'))
