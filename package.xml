@@ -16,13 +16,37 @@
     <api>##API_VERSION##</api>
   </version>
   <stability>
-    <release>##STABILITY##</release>
-    <api>##STABILITY##</api>
+    <release>stable</release>
+    <api>stable</api>
   </stability>
   <license uri="http://www.symfony-project.org/license">MIT license</license>
   <notes>-</notes>
   <contents>
-    ##CONTENTS##
+   <dir name="/">
+     
+     <dir name="lib">
+       <dir name="cache">
+         <file name="sfRedisCache.class.php" role="data"/>
+       </dir>
+     </dir>
+
+     <dir name="test">
+       <dir name="bin">
+         <file name="prove.php" role="data"/>
+       </dir>
+       <dir name="bootstrap">
+         <file name="unit.php" role="data"/>
+       </dir>
+       <dir name="unit">
+         <file name="sfCacheDriverTests.class.php" role="data"/>
+         <file name="sfRedisCacheCompiledTest.php" role="data"/>
+         <file name="sfRedisCacheSharedTest.php" role="data"/>
+       </dir>
+     </dir>
+
+     <file name="README" role="data"/>
+     <file name="LICENSE" role="data"/>
+   </dir>
   </contents>
   <dependencies>
     <required>
