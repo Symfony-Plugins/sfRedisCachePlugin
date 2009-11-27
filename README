@@ -70,10 +70,11 @@ Configuration
 -------------
 
 The class accepts some option parameters:
- * _mode_:  shared or compiled. If shared, it will load a redis.php file within your PHP include path
- * _host_:  host to connect on
- * _port_:  port to connect on _host_
- * _redis_: Redis object instance, in case you'd like to pass your own class to the cache backend
+ * _class_': the Redis class we try to load (default to Redis)
+ * _mode_:   Defines if we work with the "compiled" (faster) or "shared" (easier) library (default to "shared")
+ * _host_:   The default server (default to 127.0.0.1)
+ * _port_:   The default port (default to 6379)
+ * _redis_:  a redis object (not mandatory)
 
 
 Todo-list

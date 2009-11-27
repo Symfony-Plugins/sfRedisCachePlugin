@@ -16,7 +16,8 @@ class sfRedisCache extends sfCache
    * Checks for the existence of Redis object, through the PHP Lib (libphp-redis) or PHP Module (phpredis)
    *
    * Available options :
-   * * redis : a redis object (not mandatory)
+   * * redis:  a redis object (not mandatory)
+   * * class:  the Redis class we try to load (default to Redis)
    *
    * * mode:   Defines if we work with the "compiled" (faster) or "shared" (easier) library (default to "shared")
    * * port:   The default port (default to 6379)
@@ -28,22 +29,23 @@ class sfRedisCache extends sfCache
   {
     parent::initialize($options);
 
-    if($this->getOption('mode', 'shared') === 'shared' && !class_exists('Redis'))
+    if($this->getOption('mode', 'shared') === 'shared' && !class_exists($this->getOption('class', 'Redis')))
     {
       include 'redis.php';
     }
 
-    if (!class_exists('Redis'))
+    if (!class_exists($this->getOption('class', 'Redis')))
     {
-      throw new sfInitializationException('You must have Redis installed as a compiled module or shared class.');
+      throw new sfInitializationException(sprintf('You must have %s installed as a compiled module or shared class.', $this->getOption('class', 'Redis')));
     }
 
-    if (!method_exists('Redis', 'expire'))
+    if (!method_exists($this->getOption('class', 'Redis'), 'expire'))
     {
-      throw new sfInitializationException(sprintf('Your %s version of Redis does not support expire method. Too bad, it will not work.', $this->getOption('mode', 'shared')));
+      throw new sfInitializationException(sprintf('Your %s version of %s does not support expire method. Too bad, it will not work.', $this->getOption('mode', 'shared'), $this->getOption('class', 'Redis')));
     }
 
-    $this->redis = $this->getOption('redis') ? $this->getOption('redis') : new Redis;
+    $class = $this->getOption('class', 'Redis');
+    $this->redis = $this->getOption('redis') ? $this->getOption('redis') : new $class;
     $this->redis->connect($this->getOption('server', '127.0.0.1'), $this->getOption('port', 6379));
 
     if (!$this->redis->ping())
