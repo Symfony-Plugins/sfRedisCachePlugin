@@ -38,6 +38,11 @@ class sfRedisCache extends sfCache
       throw new sfInitializationException('You must have Redis installed as a compiled module or shared class.');
     }
 
+    if (!method_exists('Redis', 'expire'))
+    {
+      throw new sfInitializationException(sprintf('Your %s version of Redis does not support expire method. Too bad, it will not work.', $this->getOption('mode', 'shared')));
+    }
+
     $this->redis = $this->getOption('redis') ? $this->getOption('redis') : new Redis;
     $this->redis->connect($this->getOption('server', '127.0.0.1'), $this->getOption('port', 6379));
 
